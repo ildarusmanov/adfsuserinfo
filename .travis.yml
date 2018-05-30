@@ -2,7 +2,7 @@ language: go
 go:
   - 1.9.x
 env:
-  - CC_TEST_REPORTER_ID=
+  - CC_TEST_REPORTER_ID=38d8bbf824319af70da37f7713988e0b16f121529e6788ff122b49cfec43d8ec
 before_script:
   - curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
   - chmod +x ./cc-test-reporter
