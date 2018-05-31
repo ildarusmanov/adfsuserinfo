@@ -30,7 +30,7 @@
 
 [[constraint]]
   branch = "master"
-  name = "github.com/ildarusmanov/msofficepreview"
+  name = "github.com/ildarusmanov/adfsuserinfo"
 
 [[constraint]]
   name = "github.com/stretchr/testify"
