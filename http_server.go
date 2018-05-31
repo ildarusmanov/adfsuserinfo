@@ -18,6 +18,7 @@ func CreateRouter(serviceLocator interfaces.ServiceLocator) *gin.Engine {
 	apiv1 := r.Group("/api/v1")
 	{
 		apiv1.GET("/me", userinfoC.Get)
+		apiv1.POST("/me", userinfoC.Get)
 		apiv1.GET("/status/check", statusC.Check)
 	}
 

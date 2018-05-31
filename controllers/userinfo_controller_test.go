@@ -3,6 +3,8 @@ package controllers
 import (
 	"net/http"
 	"net/http/httptest"
+	"net/url"
+	"strings"
 	"testing"
 
 	"github.com/gin-gonic/gin"
@@ -39,8 +41,19 @@ func TestUserinfoMethod(t *testing.T) {
 	controller.Get(ctx1)
 	resp1 := w1.Result()
 
-	// body, _ := ioutil.ReadAll(resp.Body)
+	w2 := httptest.NewRecorder()
+	ctx2, _ := gin.CreateTestContext(w1)
+
+	form := url.Values{}
+	form.Add("access_token", validTokenStr)
+
+	ctx2.Request, _ = http.NewRequest("POST", "/", strings.NewReader(form.Encode()))
+	ctx2.Request.Header.Set("Content-Type", "application/x-www-form-urlencoded")
+
+	controller.Get(ctx1)
+	resp2 := w2.Result()
 
 	assert := assert.New(t)
 	assert.Equal(resp1.StatusCode, http.StatusOK)
+	assert.Equal(resp2.StatusCode, http.StatusOK)
 }
