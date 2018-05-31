@@ -21,10 +21,11 @@ func CreateUserinfoController(us interfaces.UserinfoService) *UserinfoController
 // Request example:
 // GET /api/v1/me?access_token=[[jwt access token]]
 func (uc *UserinfoController) Get(ctx *gin.Context) {
-	accessToken, ok := ctx.GetQuery("access_token")
+	accessToken := uc.getAccessToken(ctx)
 
-	if !ok {
+	if accessToken == "" {
 		ctx.AbortWithStatusJSON(http.StatusNotFound, gin.H{"error": "Not found"})
+		return
 	}
 
 	userinfo, err := uc.userinfoService.GetUserinfoByToken(accessToken)
@@ -40,4 +41,12 @@ func (uc *UserinfoController) Get(ctx *gin.Context) {
 		"photo_url": userinfo.GetPhotoUrl(),
 		"username":  userinfo.GetUsername(),
 	})
+}
+
+func (uc *UserinfoController) getAccessToken(ctx *gin.Context) string {
+	if t, ok := ctx.GetQuery("access_token"); ok {
+		return t
+	}
+
+	return ctx.PostForm("access_token")
 }
